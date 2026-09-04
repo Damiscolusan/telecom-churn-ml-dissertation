@@ -1,0 +1,61 @@
+{
+  "provenance": {
+    "source": "Final_churn_project.ipynb executed outputs",
+    "dataset_sha256": "88be4b93fbe0cc83421af1c503794c97c342eca914c1576db7c276e61d61358a",
+    "random_state": 42
+  },
+  "dataset": {
+    "records": 7043,
+    "raw_columns": 21,
+    "model_features": 36,
+    "development_rows": 5634,
+    "held_out_rows": 1409,
+    "churn_rate": 0.2653698707936959
+  },
+  "model": {
+    "name": "Logistic Regression",
+    "C": 0.01,
+    "solver": "lbfgs",
+    "class_weight": "balanced",
+    "selected_threshold": 0.56,
+    "selection_reason": "Development-selected interpretable operational model"
+  },
+  "development": {
+    "grid_search_cv_f1": 0.628939,
+    "threshold": 0.56,
+    "threshold_precision": 0.5561,
+    "threshold_recall": 0.7458,
+    "threshold_f1": 0.6371,
+    "cross_validation": {
+      "Logistic Regression": {"F1": 0.6295, "Recall": 0.7886, "ROC_AUC": 0.8444},
+      "Decision Tree": {"F1": 0.6090, "Recall": 0.7538, "ROC_AUC": 0.8201},
+      "Random Forest": {"F1": 0.6288, "Recall": 0.6763, "ROC_AUC": 0.8392},
+      "Extra Trees": {"F1": 0.6260, "Recall": 0.7043, "ROC_AUC": 0.8394},
+      "AdaBoost": {"F1": 0.6332, "Recall": 0.7244, "ROC_AUC": 0.8423},
+      "Gradient Boosting": {"F1": 0.6290, "Recall": 0.6722, "ROC_AUC": 0.8456},
+      "XGBoost": {"F1": 0.6335, "Recall": 0.7211, "ROC_AUC": 0.8461},
+      "MLP Neural Network": {"F1": 0.5121, "Recall": 0.5157, "ROC_AUC": 0.7630}
+    }
+  },
+  "cost_sensitivity": {
+    "3:1": {"threshold": 0.53, "relative_cost_per_customer": 0.357650},
+    "5:1": {"threshold": 0.34, "relative_cost_per_customer": 0.428293},
+    "10:1": {"threshold": 0.26, "relative_cost_per_customer": 0.515974}
+  },
+  "held_out_metrics": {
+    "Logistic Regression": {"Accuracy": 0.7367, "Precision": 0.5026, "Recall": 0.7861, "F1": 0.6131, "ROC_AUC": 0.8400, "PR_AUC": 0.6278, "BalancedAcc": 0.7525, "MCC": 0.4525},
+    "Random Forest": {"Accuracy": 0.7715, "Precision": 0.5583, "Recall": 0.6658, "F1": 0.6073, "ROC_AUC": 0.8366, "PR_AUC": 0.6428, "BalancedAcc": 0.7377, "MCC": 0.4514},
+    "AdaBoost": {"Accuracy": 0.7509, "Precision": 0.5211, "Recall": 0.7594, "F1": 0.6181, "ROC_AUC": 0.8362, "PR_AUC": 0.6387, "BalancedAcc": 0.7536, "MCC": 0.4599},
+    "XGBoost": {"Accuracy": 0.7729, "Precision": 0.5538, "Recall": 0.7433, "F1": 0.6347, "ROC_AUC": 0.8423, "PR_AUC": 0.6524, "BalancedAcc": 0.7634, "MCC": 0.4858},
+    "MLP Neural Network": {"Accuracy": 0.7367, "Precision": 0.5037, "Recall": 0.5428, "F1": 0.5225, "ROC_AUC": 0.7684, "PR_AUC": 0.5207, "BalancedAcc": 0.6748, "MCC": 0.3416},
+    "Logistic Regression (t=0.56)": {"Accuracy": 0.7637, "Precision": 0.5401, "Recall": 0.7380, "F1": 0.6237, "ROC_AUC": 0.8400, "PR_AUC": 0.6278, "BalancedAcc": 0.7555, "MCC": 0.4693},
+    "Majority Class (baseline)": {"Accuracy": 0.7346, "Precision": 0.0, "Recall": 0.0, "F1": 0.0, "ROC_AUC": 0.5, "PR_AUC": 0.2654, "BalancedAcc": 0.5, "MCC": 0.0}
+  },
+  "held_out_confusion_matrix": {"threshold": 0.56, "tn": 800, "fp": 235, "fn": 98, "tp": 276},
+  "excluded_inputs": {
+    "extension_results(2).json": "Different experiment; threshold 0.43 conflicts with the final notebook threshold 0.56.",
+    "threshold_sweep(2).png": "Plots the conflicting 0.43 experiment.",
+    "cost_curve(2).png": "Cost optima do not match the final notebook.",
+    "cv_boxplot(2).png": "Cross-validation fold values do not match the final notebook."
+  }
+}
