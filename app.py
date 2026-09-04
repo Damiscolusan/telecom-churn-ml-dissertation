@@ -93,11 +93,13 @@ except Exception as exc:
 st.markdown(
     """
 <section class="hero">
-  <div class="eyebrow">MSc artificial intelligence research artefact</div>
+  <div class="eyebrow">MSc Artificial Intelligence Dissertation Project</div>
   <h1>Telecom churn decision-support prototype</h1>
-  <p>An interpretable, class-weighted Logistic Regression model for estimating
-  customer churn probability. Predictions support human review and are not
-  automated retention decisions.</p>
+  <p>This application demonstrates the Logistic Regression model developed for my
+dissertation. It estimates customer churn probability from account, billing and
+service information. The result supports human decision-making rather than
+replacing it.</p>
+<p class="small-muted">Ayodamola Olusanya | University of South Wales | 2026</p>
 </section>
 """,
     unsafe_allow_html=True,
@@ -111,9 +113,9 @@ summary_cols[2].metric("Held-out test set", f"{overview['held_out_rows']:,}")
 summary_cols[3].metric("Observed churn", f"{overview['churn_rate']:.1%}")
 
 with st.sidebar:
-    st.markdown("### Decision policy")
+    st.markdown("### Prediction threshold")
     policy_values = {
-        "F1-selected, primary": 0.56,
+        "Primary threshold, optimised for F1": 0.56,
         "Cost sensitivity, FN:FP 3:1": 0.53,
         "Cost sensitivity, FN:FP 5:1": 0.34,
         "Cost sensitivity, FN:FP 10:1": 0.26,
@@ -143,11 +145,11 @@ with st.sidebar:
     st.caption("The application loads a frozen model. It does not retrain on start-up.")
 
 assessment_tab, evidence_tab, method_tab = st.tabs(
-    ["Customer assessment", "Evaluation evidence", "Method and limitations"]
+    ["Churn prediction", "Model performance", "Methodology and limitations"]
 )
 
 with assessment_tab:
-    st.subheader("Assess one customer record")
+    st.subheader("Enter customer details")
     st.caption(
         "Provide observed account characteristics. Service dependencies are enforced "
         "before feature engineering and prediction."
@@ -178,7 +180,7 @@ with assessment_tab:
             ],
         )
         monthly = st.number_input(
-            "Monthly charges, dataset currency units",
+            "Monthly charges",
             min_value=18.0,
             max_value=120.0,
             value=70.0,
@@ -186,7 +188,7 @@ with assessment_tab:
         )
         default_total = 0.0 if tenure == 0 else float(round(monthly * tenure, 2))
         total = st.number_input(
-            "Total charges, dataset currency units",
+            "Total charges",
             min_value=0.0,
             max_value=9000.0,
             value=default_total,
@@ -194,6 +196,7 @@ with assessment_tab:
             disabled=tenure == 0,
             help="Set to zero for a new customer with zero months of tenure.",
         )
+        st.caption("The source dataset does not specify a currency.")
         if tenure == 0:
             total = 0.0
 
@@ -264,8 +267,10 @@ with assessment_tab:
             r1, r2, r3 = st.columns([1.2, 1, 1])
             r1.metric("Modelled churn probability", f"{result.probability:.1%}")
             r2.metric("Active threshold", f"{result.threshold:.0%}")
-            r3.metric("Policy outcome", "Retention review" if result.flagged else "No model flag")
-
+            r3.metric(
+            "Prediction outcome",
+            "Flagged for review" if result.flagged else "Not flagged for review",
+                        )
             bar_colour = "#b34a32" if result.flagged else "#24775a"
             st.markdown(
                 f"""
@@ -277,14 +282,14 @@ with assessment_tab:
             )
             if result.flagged:
                 st.markdown(
-                    '<div class="risk-high"><b>Human review indicated.</b> The score is at or above '
+                    '<div class="risk-high"><b>Customer flagged for review.</b> The score is at or above '
                     "the active operating threshold. Review the customer context before considering "
                     "any retention action.</div>",
                     unsafe_allow_html=True,
                 )
             else:
                 st.markdown(
-                    '<div class="risk-low"><b>No model-triggered review.</b> The score is below the '
+                    '<div class="risk-low"><b>Customer not flagged for review.</b> The score is below the '
                     "active operating threshold. This is not a guarantee that the customer will remain.</div>",
                     unsafe_allow_html=True,
                 )
@@ -331,12 +336,12 @@ with assessment_tab:
 with evidence_tab:
     st.subheader("Evaluation evidence")
     st.markdown(
-        '<div class="evidence-note">All values below are transcribed from the executed outputs of '
-        '<b>Final_churn_project.ipynb</b>. The separate extension results and figures were excluded '
-        "because they represent a different experiment and contradict the final threshold and "
-        "cross-validation results.</div>",
-        unsafe_allow_html=True,
-    )
+    '<div class="evidence-note">The results below were obtained from the final '
+    'executed dissertation notebook. Model selection and threshold optimisation '
+    'used the development data, while final performance was measured once on the '
+    'held-out test set of 1,409 customers.</div>',
+    unsafe_allow_html=True,
+)
 
     st.markdown("#### Deployed operating point")
     selected = metadata["held_out_metrics"]["Logistic Regression (t=0.56)"]
@@ -465,6 +470,7 @@ with method_tab:
 
 st.divider()
 st.caption(
-    "Telecom churn MSc research prototype · IBM Telco Customer Churn benchmark · "
-    "Frozen model, reproducible schema and explicit operating threshold"
+    "Developed by Ayodamola Olusanya as part of an MSc Artificial Intelligence "
+    "dissertation at the University of South Wales. Built using Python, "
+    "scikit-learn and Streamlit."
 )
