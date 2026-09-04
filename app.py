@@ -99,7 +99,7 @@ st.markdown(
 dissertation. It estimates customer churn probability from account, billing and
 service information. The result supports human decision-making rather than
 replacing it.</p>
-<p class="small-muted">Ayodamola Olusanya | University of South Wales | 2026</p>
+<p class="small-muted">Ayodamola Olusanya |23109390 | University of South Wales | 2026</p>
 </section>
 """,
     unsafe_allow_html=True,
